@@ -4,8 +4,11 @@ import { DayCell } from "@/components/calendar/DayCell";
 import { GlassButton } from "@/components/ui/GlassButton";
 import { DayDisplayState } from "@/types";
 import { addMonths, eachDayOfInterval, endOfMonth, endOfWeek, format, startOfMonth, startOfWeek, subMonths } from "date-fns";
+import { arSA } from "date-fns/locale";
+import { enUS } from "date-fns/locale";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface MonthViewProps {
     initialDate?: Date;
@@ -23,6 +26,7 @@ export function MonthView({
     maxDate = addMonths(new Date(), 12)
 }: MonthViewProps) {
     const [currentMonth, setCurrentMonth] = useState(initialDate);
+    const { t, language, dir } = useLanguage();
 
     const nextMonth = () => {
         const next = addMonths(currentMonth, 1);
@@ -44,21 +48,31 @@ export function MonthView({
         end: endDate,
     });
 
-    const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const weekDays = [
+        t.calendar.weekDays.sunday,
+        t.calendar.weekDays.monday,
+        t.calendar.weekDays.tuesday,
+        t.calendar.weekDays.wednesday,
+        t.calendar.weekDays.thursday,
+        t.calendar.weekDays.friday,
+        t.calendar.weekDays.saturday,
+    ];
+
+    const locale = language === "ar" ? arSA : enUS;
 
     return (
-        <div className="w-full max-w-6xl mx-auto p-4">
+        <div className="w-full max-w-6xl mx-auto p-4" dir={dir}>
             {/* Header */}
             <div className="flex items-center justify-between mb-8">
                 <h2 className="text-3xl font-bold text-white drop-shadow-lg">
-                    {format(currentMonth, "MMMM yyyy")}
+                    {format(currentMonth, "MMMM yyyy", { locale })}
                 </h2>
                 <div className="flex gap-2">
                     <GlassButton onClick={prevMonth} disabled={currentMonth <= startOfMonth(minDate)} size="sm">
-                        <ChevronLeft className="w-5 h-5" />
+                        <ChevronLeft className="w-5 h-5 flip-rtl" />
                     </GlassButton>
                     <GlassButton onClick={nextMonth} disabled={currentMonth >= startOfMonth(maxDate)} size="sm">
-                        <ChevronRight className="w-5 h-5" />
+                        <ChevronRight className="w-5 h-5 flip-rtl" />
                     </GlassButton>
                 </div>
             </div>
@@ -95,6 +109,6 @@ export function MonthView({
                     );
                 })}
             </div>
-        </div>
+        </div >
     );
 }

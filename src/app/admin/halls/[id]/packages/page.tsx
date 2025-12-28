@@ -33,20 +33,20 @@ export default async function HallPackagesPage({ params }: { params: { id: strin
         .eq('hall_id', id)
         .order('created_at', { ascending: true })
 
-    if (!hall) return <div>Hall not found</div>
+    if (!hall) return <div>القاعة غير موجودة</div>
 
     return (
-        <div>
+        <div dir="rtl">
             <header className="mb-8">
                 <Link
                     href="/admin/halls"
                     className="inline-flex items-center gap-2 text-white/60 hover:text-white mb-4 transition-colors"
                 >
-                    <ArrowLeft className="w-4 h-4" />
-                    Back to Halls
+                    <ArrowLeft className="w-4 h-4 rotate-180" />
+                    العودة للقاعات
                 </Link>
-                <h1 className="text-3xl font-bold text-white mb-2">Configure Packages</h1>
-                <p className="text-white/60">Manage service packages for <span className="text-white font-medium">{hall.name}</span>.</p>
+                <h1 className="text-3xl font-bold text-white mb-2">تكوين الباقات</h1>
+                <p className="text-white/60">إدارة باقات الخدمات لـ <span className="text-white font-medium">{hall.name}</span>.</p>
             </header>
 
             <HallPackages

@@ -116,7 +116,31 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* RTL Support Utils */
+  [dir="rtl"] .flip-rtl {
+    transform: scaleX(-1);
+  }
+
+  /* Font utilities for language switching */
+  .font-arabic {
+    font-family: var(--font-ibm-arabic);
+  }
+
+  .font-english {
+    font-family: var(--font-inter);
+  }
+
+  /* Dynamic font based on HTML lang attribute */
+  html[lang="ar"] body {
+    font-family: var(--font-ibm-arabic);
+  }
+
+  html[lang="en"] body {
+    font-family: var(--font-inter);
   }
 }

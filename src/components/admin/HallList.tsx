@@ -11,19 +11,21 @@ type Hall = {
     theme_color: string | null
 }
 
-export function HallList({ initialHalls }: { initialHalls: Hall[] }) {
+// ... imports
+
+export function HallList({ initialHalls, companyId }: { initialHalls: Hall[], companyId: string }) {
     const [isAdding, setIsAdding] = useState(false)
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6" dir="rtl">
             <div className="flex justify-between items-center">
-                <h2 className="text-xl font-semibold text-white">All Halls</h2>
+                <h2 className="text-xl font-semibold text-white">القاعات</h2>
                 <button
                     onClick={() => setIsAdding(!isAdding)}
                     className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white text-black font-medium hover:bg-white/90 transition-colors"
                 >
                     <Plus className="w-4 h-4" />
-                    Add Hall
+                    إضافة قاعة
                 </button>
             </div>
 
@@ -38,32 +40,33 @@ export function HallList({ initialHalls }: { initialHalls: Hall[] }) {
                 >
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
-                            <label className="block text-sm text-white/60 mb-1">Name</label>
+                            <label className="block text-sm text-white/60 mb-1">الاسم</label>
                             <input
                                 name="name"
                                 required
-                                placeholder="e.g. Grand Ballroom"
+                                placeholder="مثلاً: القاعة الكبرى"
                                 className="w-full px-4 py-2 rounded-xl bg-black/20 border border-white/10 text-white focus:outline-none focus:border-white/30"
                             />
                         </div>
                         <div>
-                            <label className="block text-sm text-white/60 mb-1">Slug</label>
+                            <label className="block text-sm text-white/60 mb-1">الاسم المختصر (Slug)</label>
                             <input
                                 name="slug"
                                 required
                                 placeholder="e.g. grand-ballroom"
                                 className="w-full px-4 py-2 rounded-xl bg-black/20 border border-white/10 text-white focus:outline-none focus:border-white/30"
+                                dir="ltr"
                             />
                         </div>
                         <div>
-                            <label className="block text-sm text-white/60 mb-1">Theme Color</label>
+                            <label className="block text-sm text-white/60 mb-1">لون الثيم</label>
                             <select
                                 name="color"
                                 className="w-full px-4 py-2 rounded-xl bg-black/20 border border-white/10 text-white focus:outline-none focus:border-white/30"
                             >
-                                <option value="blue">Blue</option>
-                                <option value="purple">Purple</option>
-                                <option value="gold">Gold</option>
+                                <option value="blue">أزرق</option>
+                                <option value="purple">بنفسجي</option>
+                                <option value="gold">ذهبي</option>
                             </select>
                         </div>
                     </div>
@@ -73,13 +76,13 @@ export function HallList({ initialHalls }: { initialHalls: Hall[] }) {
                             onClick={() => setIsAdding(false)}
                             className="px-4 py-2 rounded-xl text-white/60 hover:text-white hover:bg-white/5"
                         >
-                            Cancel
+                            إلغاء
                         </button>
                         <button
                             type="submit"
                             className="px-4 py-2 rounded-xl bg-white text-black font-medium hover:bg-white/90"
                         >
-                            Create Hall
+                            إنشاء القاعة
                         </button>
                     </div>
                 </form>
@@ -98,7 +101,7 @@ export function HallList({ initialHalls }: { initialHalls: Hall[] }) {
                             </div>
                             <div>
                                 <h3 className="text-white font-medium">{hall.name}</h3>
-                                <p className="text-white/40 text-sm">/hall/{hall.slug}</p>
+                                <p className="text-white/40 text-sm" dir="ltr">/hall/{hall.slug}</p>
                             </div>
                         </div>
 
@@ -107,12 +110,12 @@ export function HallList({ initialHalls }: { initialHalls: Hall[] }) {
                                 href={`/admin/halls/${hall.id}/packages`}
                                 className="px-3 py-1.5 rounded-lg bg-white/5 text-white/60 text-sm hover:bg-white/10 hover:text-white transition-colors"
                             >
-                                Packages
+                                الباقات
                             </a>
                             <button
                                 onClick={() => deleteHall(hall.id)}
                                 className="p-2 rounded-lg text-red-400 hover:bg-red-500/10 opacity-0 group-hover:opacity-100 transition-all"
-                                title="Delete Hall"
+                                title="حذف القاعة"
                             >
                                 <Trash2 className="w-4 h-4" />
                             </button>
@@ -122,7 +125,7 @@ export function HallList({ initialHalls }: { initialHalls: Hall[] }) {
 
                 {initialHalls.length === 0 && (
                     <div className="text-center py-12 text-white/40">
-                        No halls found. Create one to get started.
+                        لا توجد قاعات. قم بإنشاء واحدة للبدء.
                     </div>
                 )}
             </div>

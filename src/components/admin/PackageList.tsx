@@ -15,20 +15,22 @@ type ServicePackage = {
     items: PackageItem[]
 }
 
+// ... imports
+
 export function PackageList({ initialPackages }: { initialPackages: ServicePackage[] }) {
     const [isAddingPkg, setIsAddingPkg] = useState(false)
     const [expandedPkg, setExpandedPkg] = useState<string | null>(null)
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6" dir="rtl">
             <div className="flex justify-between items-center">
-                <h2 className="text-xl font-semibold text-white">Global Packages</h2>
+                <h2 className="text-xl font-semibold text-white">الباقات العامة</h2>
                 <button
                     onClick={() => setIsAddingPkg(!isAddingPkg)}
                     className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white text-black font-medium hover:bg-white/90 transition-colors"
                 >
                     <Plus className="w-4 h-4" />
-                    Create Package
+                    إنشاء باقة
                 </button>
             </div>
 
@@ -44,21 +46,21 @@ export function PackageList({ initialPackages }: { initialPackages: ServicePacka
                     <input
                         name="name"
                         required
-                        placeholder="Package Name (e.g. Facilities)"
+                        placeholder="اسم الباقة (مثلاً: تجهيزات)"
                         className="flex-1 px-4 py-2 rounded-xl bg-black/20 border border-white/10 text-white focus:outline-none focus:border-white/30"
                     />
                     <button
                         type="submit"
                         className="px-4 py-2 rounded-xl bg-white text-black font-medium hover:bg-white/90"
                     >
-                        Create
+                        إنشاء
                     </button>
                     <button
                         type="button"
                         onClick={() => setIsAddingPkg(false)}
                         className="px-4 py-2 rounded-xl text-white/60 hover:text-white hover:bg-white/5"
                     >
-                        Cancel
+                        إلغاء
                     </button>
                 </form>
             )}
@@ -80,14 +82,14 @@ export function PackageList({ initialPackages }: { initialPackages: ServicePacka
                                 </div>
                                 <div>
                                     <h3 className="text-white font-medium">{pkg.name}</h3>
-                                    <p className="text-white/40 text-sm">{pkg.items.length} items</p>
+                                    <p className="text-white/40 text-sm">{pkg.items.length} عنصر</p>
                                 </div>
                             </div>
 
                             <button
                                 onClick={() => deletePackage(pkg.id)}
                                 className="p-2 rounded-lg text-red-400 hover:bg-red-500/10 transition-all"
-                                title="Delete Package"
+                                title="حذف الباقة"
                             >
                                 <Trash2 className="w-4 h-4" />
                             </button>
@@ -112,7 +114,7 @@ export function PackageList({ initialPackages }: { initialPackages: ServicePacka
                                         </div>
                                     ))}
                                     {pkg.items.length === 0 && (
-                                        <p className="text-white/20 text-sm italic p-2">No items in this package.</p>
+                                        <p className="text-white/20 text-sm italic p-2">لا توجد عناصر في هذه الباقة.</p>
                                     )}
                                 </div>
 
@@ -125,14 +127,14 @@ export function PackageList({ initialPackages }: { initialPackages: ServicePacka
                                     <input
                                         name="name"
                                         required
-                                        placeholder="Add item (e.g. Perfume Table)"
+                                        placeholder="إضافة عنصر (مثلاً: طاولة عطور)..."
                                         className="flex-1 px-3 py-2 rounded-lg bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-white/30"
                                     />
                                     <button
                                         type="submit"
                                         className="px-3 py-2 rounded-lg bg-white/10 text-white text-sm hover:bg-white/20"
                                     >
-                                        Add
+                                        إضافة
                                     </button>
                                 </form>
                             </div>
@@ -142,7 +144,7 @@ export function PackageList({ initialPackages }: { initialPackages: ServicePacka
 
                 {initialPackages.length === 0 && (
                     <div className="text-center py-12 text-white/40">
-                        No packages found. Create one to get started.
+                        لا توجد باقات. قم بإنشاء واحدة للبدء.
                     </div>
                 )}
             </div>

@@ -12,16 +12,16 @@ export default async function SettingsPage() {
         .single()
 
     return (
-        <div>
+        <div dir="rtl">
             <header className="mb-8">
-                <h1 className="text-3xl font-bold text-white mb-2">Settings</h1>
-                <p className="text-white/60">Manage your account and system preferences.</p>
+                <h1 className="text-3xl font-bold text-white mb-2">الإعدادات</h1>
+                <p className="text-white/60">إدارة حسابك وتفضيلات النظام.</p>
             </header>
 
             <div className="max-w-2xl space-y-6">
                 {/* Profile Card */}
                 <div className="p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm">
-                    <h2 className="text-xl font-semibold text-white mb-6">Profile Information</h2>
+                    <h2 className="text-xl font-semibold text-white mb-6">معلومات الملف الشخصي</h2>
 
                     <div className="space-y-6">
                         <div className="flex items-center gap-4">
@@ -29,7 +29,7 @@ export default async function SettingsPage() {
                                 <User className="w-6 h-6" />
                             </div>
                             <div>
-                                <label className="block text-sm text-white/60 mb-1">Email Address</label>
+                                <label className="block text-sm text-white/60 mb-1">البريد الإلكتروني</label>
                                 <p className="text-white font-medium">{user?.email}</p>
                             </div>
                         </div>
@@ -39,9 +39,9 @@ export default async function SettingsPage() {
                                 <Shield className="w-6 h-6" />
                             </div>
                             <div>
-                                <label className="block text-sm text-white/60 mb-1">Role</label>
+                                <label className="block text-sm text-white/60 mb-1">الدور</label>
                                 <p className="text-white font-medium capitalize">
-                                    {profile?.role?.replace('_', ' ') || 'User'}
+                                    {profile?.role?.replace('_', ' ') || 'مستخدم'}
                                 </p>
                             </div>
                         </div>
@@ -50,15 +50,15 @@ export default async function SettingsPage() {
 
                 {/* System Info */}
                 <div className="p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm">
-                    <h2 className="text-xl font-semibold text-white mb-4">System Information</h2>
+                    <h2 className="text-xl font-semibold text-white mb-4">معلومات النظام</h2>
                     <div className="grid grid-cols-2 gap-4">
                         <div className="p-4 rounded-xl bg-black/20">
-                            <p className="text-white/40 text-sm">Version</p>
+                            <p className="text-white/40 text-sm">الإصدار</p>
                             <p className="text-white font-mono">v2.3.0</p>
                         </div>
                         <div className="p-4 rounded-xl bg-black/20">
-                            <p className="text-white/40 text-sm">Environment</p>
-                            <p className="text-green-400 font-mono">Production</p>
+                            <p className="text-white/40 text-sm">البيئة</p>
+                            <p className="text-green-400 font-mono">إنتاج</p>
                         </div>
                     </div>
                 </div>

@@ -24,6 +24,10 @@ type LocalItem = {
     name: string
 }
 
+// ... imports
+
+// ... types
+
 export function HallPackages({
     hallId,
     globalPackages,
@@ -36,7 +40,7 @@ export function HallPackages({
     localItems: LocalItem[]
 }) {
     return (
-        <div className="space-y-6">
+        <div className="space-y-6" dir="rtl">
             <div className="grid grid-cols-1 gap-6">
                 {globalPackages.map((pkg) => {
                     const hallService = hallServices.find(hs => hs.service_id === pkg.id)
@@ -92,38 +96,38 @@ function PackageCard({
             router.refresh()
         } catch (error) {
             console.error(error)
-            alert('Failed to save')
+            alert('فشل الحفظ')
         } finally {
             setIsSaving(false)
         }
     }
 
     const handleCustomize = async () => {
-        if (!confirm('This will create a custom list of items for this hall. Continue?')) return
+        if (!confirm('سيتم إنشاء قائمة مخصصة لهذه القاعة. هل أنت متأكد؟')) return
         try {
             await initializeLocalItems(hallId, pkg.id)
             router.refresh()
         } catch (error) {
             console.error(error)
-            alert('Failed to initialize custom items')
+            alert('فشل تهيئة العناصر المخصصة')
         }
     }
 
     const handleReset = async () => {
-        if (!confirm('This will delete all custom items and revert to the global list. Continue?')) return
+        if (!confirm('سيتم حذف جميع التخصيصات والعودة للقائمة العامة. هل أنت متأكد؟')) return
         try {
             await resetToGlobal(hallId, pkg.id)
             router.refresh()
         } catch (error) {
             console.error(error)
-            alert('Failed to reset')
+            alert('فشل إعادة التعيين')
         }
     }
 
     return (
         <div className={`p-6 rounded-3xl border transition-all ${isActive
-                ? 'bg-white/10 border-white/20'
-                : 'bg-white/5 border-white/5 opacity-75'
+            ? 'bg-white/10 border-white/20'
+            : 'bg-white/5 border-white/5 opacity-75'
             }`}>
             <div className="flex items-start justify-between mb-6">
                 <div className="flex items-center gap-4">
@@ -134,20 +138,20 @@ function PackageCard({
                     <div>
                         <h3 className="text-xl font-bold text-white">{pkg.name}</h3>
                         <p className="text-white/40 text-sm">
-                            {hasCustomItems ? 'Custom Items' : 'Global Items'} • {hasCustomItems ? localItems.length : pkg.items.length} items
+                            {hasCustomItems ? 'عناصر مخصصة' : 'عناصر عامة'} • {hasCustomItems ? localItems.length : pkg.items.length} عنصر
                         </p>
                     </div>
                 </div>
 
                 <div className="flex items-center gap-4">
                     <label className="flex items-center gap-2 cursor-pointer">
-                        <span className="text-sm text-white/60">Enabled</span>
+                        <span className="text-sm text-white/60">مفعل</span>
                         <div
                             className={`w-12 h-6 rounded-full p-1 transition-colors ${isActive ? 'bg-green-500' : 'bg-white/20'
                                 }`}
                             onClick={() => setIsActive(!isActive)}
                         >
-                            <div className={`w-4 h-4 rounded-full bg-white transition-transform ${isActive ? 'translate-x-6' : 'translate-x-0'
+                            <div className={`w-4 h-4 rounded-full bg-white transition-transform ${isActive ? '-translate-x-6' : '-translate-x-0'
                                 }`} />
                         </div>
                     </label>
@@ -158,13 +162,13 @@ function PackageCard({
                 {/* Items List */}
                 <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                        <h4 className="text-sm font-medium text-white/60">Included Items</h4>
+                        <h4 className="text-sm font-medium text-white/60">العناصر المضمنة</h4>
                         {hasCustomItems ? (
                             <div className="flex gap-2">
                                 <button
                                     onClick={handleReset}
                                     className="p-1.5 rounded-lg text-white/40 hover:text-red-400 hover:bg-white/5 transition-colors"
-                                    title="Reset to Global Defaults"
+                                    title="العودة للافتراضي العام"
                                 >
                                     <RotateCcw className="w-4 h-4" />
                                 </button>
@@ -175,7 +179,7 @@ function PackageCard({
                                 className="flex items-center gap-1.5 px-2 py-1 rounded-lg text-xs font-medium bg-white/5 text-white/60 hover:bg-white/10 hover:text-white transition-colors"
                             >
                                 <Edit2 className="w-3 h-3" />
-                                Customize
+                                تخصيص
                             </button>
                         )}
                     </div>
@@ -215,7 +219,7 @@ function PackageCard({
                                 >
                                     <input
                                         name="name"
-                                        placeholder="Add custom item..."
+                                        placeholder="إضافة عنصر مخصص..."
                                         className="flex-1 px-3 py-1.5 rounded-lg bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-white/30"
                                     />
                                     <button
@@ -237,14 +241,14 @@ function PackageCard({
                         )}
 
                         {!hasCustomItems && pkg.items.length === 0 && (
-                            <p className="text-white/20 text-sm italic">No global items defined.</p>
+                            <p className="text-white/20 text-sm italic">لا توجد عناصر عامة معرفة.</p>
                         )}
                     </div>
                 </div>
 
                 {/* Pricing Configuration */}
                 <div className="bg-black/20 p-4 rounded-2xl h-fit">
-                    <label className="block text-sm text-white/60 mb-2">Price for this Hall</label>
+                    <label className="block text-sm text-white/60 mb-2">السعر لهذه القاعة</label>
                     <div className="flex gap-2">
                         <input
                             type="number"
@@ -258,7 +262,7 @@ function PackageCard({
                             disabled={isSaving}
                             className="px-6 py-2 rounded-xl bg-white text-black font-medium hover:bg-white/90 disabled:opacity-50"
                         >
-                            {isSaving ? 'Saving...' : 'Save'}
+                            {isSaving ? 'جاري الحفظ...' : 'حفظ'}
                         </button>
                     </div>
                 </div>
