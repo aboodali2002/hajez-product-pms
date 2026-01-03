@@ -6,9 +6,23 @@ export async function updateSession(request: NextRequest) {
         request,
     })
 
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+    if (!supabaseUrl || !supabaseKey) {
+        console.error('CRITICAL: Missing Supabase Environment Variables!')
+        console.error('URL:', !!supabaseUrl)
+        console.error('Key:', !!supabaseKey)
+        // Return a clear error to the user/browser instead of crashing
+        return NextResponse.json(
+            { error: 'Configuration Error: Missing Supabase Environment Variables on Server. Please check Vercel Settings.' },
+            { status: 500 }
+        )
+    }
+
     const supabase = createServerClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        supabaseUrl,
+        supabaseKey,
         {
             cookies: {
                 getAll() {
